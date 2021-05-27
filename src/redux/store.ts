@@ -5,17 +5,6 @@ import reducer from "./reducers/reducer";
 type RootReducerType = typeof reducer;
 export type AppStateType = ReturnType<RootReducerType>;
 
-export type InferActionsTypes<T> = T extends {
-  [keys: string]: (...args: any[]) => infer U;
-}
-  ? U
-  : never;
-
-export type BaseThunkType<
-  A extends Action = Action,
-  R = Promise<void>
-> = ThunkAction<R, AppStateType, unknown, A>;
-
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
 export default store;

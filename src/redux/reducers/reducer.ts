@@ -1,4 +1,3 @@
-import {ActionsType} from "../actions";
 
 interface InitialStateType {
   doneTasks: any;
@@ -10,11 +9,17 @@ const initialState: InitialStateType = {
 
 const reducer = (
   state = initialState,
-  action: ActionsType
+  action: any
 ): InitialStateType => {
   switch (action.type) {
     case "SET_TASKS": {
       return { ...state, doneTasks: action.tasks };
+    }
+    case "ADD_NEW_TASK": {
+      return {
+        ...state,
+        doneTasks: [...state.doneTasks, action.task],
+      };
     }
     default:
       return state;

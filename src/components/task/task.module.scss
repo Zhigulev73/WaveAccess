@@ -1,0 +1,20 @@
+.taskWrap {
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+.taskTitle{
+  font-weight: bold;
+  font-size: 20px;
+}
+.taskDeadline{
+  font-weight: bold;
+  text-align: center;
+  font-size: 12px;
+  width: 120px;
+}

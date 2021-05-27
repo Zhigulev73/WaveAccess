@@ -1,6 +1,6 @@
 import React from "react";
 import TaskCreator from "../pages/TaskCreator/taskCreator";
-import List from "../components/tasks/tasksList";
+import List from "../pages/TasksList/tasksList";
 
 export type ComponentsType = {
   path: string;
