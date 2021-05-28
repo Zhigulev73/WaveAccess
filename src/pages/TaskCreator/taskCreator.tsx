@@ -10,6 +10,8 @@ import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import Slider from '@material-ui/core/Slider';
 import {useDispatch} from "react-redux";
 import {addTask} from "../../redux/actions";
+import Button from "@material-ui/core/Button";
+import {NavLink} from "react-router-dom";
 
 type PropsType = {
 
@@ -20,13 +22,13 @@ const TaskCreator: React.FC<PropsType> = () => {
     const dispatch = useDispatch();
     type DateType = MaterialUiPickersDate | null;
 
-    const [selectedDateTo, setSelectedDateTo] = useState<DateType | null>(
+    const [selectedDate, setSelectedDate] = useState<DateType | null>(
         null
     );
     const [text, setText] = useState<string>('');
 
     const handleDateToChange = (date: DateType | null) => {
-        setSelectedDateTo(date);
+        setSelectedDate(date);
     };
 
     const inputTextChanger = (event: any) => {
@@ -34,7 +36,8 @@ const TaskCreator: React.FC<PropsType> = () => {
     }
 
     const NewTaskParams = {
-        title: text
+        title: text,
+        deadline: selectedDate
     }
     const valuetext = (value: number) => {
         return `${value}°C`;
@@ -49,37 +52,39 @@ const TaskCreator: React.FC<PropsType> = () => {
     return (
         <>
             <div className={classes.listWrap}>
-                <div>
-                <h2>Title: </h2>
+                <div className={classes.listItemsWrap}>
+                <h2 className={classes.listTaskTitle}>Title: </h2>
                 <input
                     onChange={inputTextChanger}
                     value={text}
                     onKeyPress={AddHandleEnter}
                 />
             </div>
-            <div>
+            <div className={classes.listItemsWrap}>
                 <h2>Deadline: </h2>
-                <input type={'checkbox'} /> <span> Task for a month</span>
-                <input type={'checkbox'} /> <span> Task for a week</span>
-                <input type={'checkbox'} /> <span> Task with deadline</span>
+                <div className={classes.listDeadlineChooser}>
+                    <div><input type={'checkbox'} /> <span>today</span></div>
+                    <div><input type={'checkbox'} /> <span>for a week</span></div>
+                    <div><input type={'checkbox'} /> <span>for a month</span></div>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                            variant="inline"
+                            format="dd-MM-yyyy"
+                            margin="normal"
+                            id="date-picker-inline2"
+                            value={selectedDate}
+                            onChange={handleDateToChange}
+                            KeyboardButtonProps={{
+                                "aria-label": "change date",
+                            }}
+                            style={{width: 180, marginBottom: "20px"}}
+                            disableToolbar
+                        />
+                    </MuiPickersUtilsProvider>
+                </div>
             </div>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                    variant="inline"
-                    format="dd-MM-yyyy"
-                    margin="normal"
-                    id="date-picker-inline2"
-                    value={selectedDateTo}
-                    onChange={handleDateToChange}
-                    KeyboardButtonProps={{
-                        "aria-label": "change date",
-                    }}
-                    style={{width: 180, marginBottom: "20px"}}
-                    disableToolbar
-                />
-            </MuiPickersUtilsProvider>
-            <div>
-                <h2>Priority: </h2>
+            <div className={classes.listItemsWrap}>
+                <h2 className={classes.listTaskTitle}>Priority: </h2>
                 <div className={classes.root}>
                     <Slider
                         defaultValue={3}
@@ -93,9 +98,13 @@ const TaskCreator: React.FC<PropsType> = () => {
                     />
                 </div>
             </div>
-            <div>
-                <h2>Tags: </h2>
+            <div className={classes.listItemsWrap}>
+                <h2 className={classes.listTaskTitle}>Tags: </h2>
+                <input />
             </div>
+                <div>
+                    <Button color="primary" variant="contained">add</Button>
+                </div>
             </div>
         </>
     );
